@@ -11,7 +11,7 @@ const form = document.createElement('form');
 
 // Création du champ Email
 const emailLabel = document.createElement('label');
-emailLabel.textContent = 'Email:';
+emailLabel.textContent = 'Email';
 const emailInput = document.createElement('input');
 emailInput.type = 'email';
 emailInput.name = 'email';
@@ -19,7 +19,7 @@ emailInput.required = true;
 
 // Création du champ Mot de passe
 const passwordLabel = document.createElement('label');
-passwordLabel.textContent = 'Mot de passe:';
+passwordLabel.textContent = 'Mot de passe';
 const passwordInput = document.createElement('input');
 passwordInput.type = 'password';
 passwordInput.name = 'password';
