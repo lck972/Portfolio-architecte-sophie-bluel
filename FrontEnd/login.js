@@ -8,6 +8,7 @@ loginTitle.textContent = 'Log In';
 
 // Création du formulaire
 const form = document.createElement('form');
+form.classList.add('identifiant');
 
 // Création du champ Email
 const emailLabel = document.createElement('label');
@@ -50,6 +51,45 @@ connexion.appendChild(form);
 // Ajout de la div "connexion" à la balise <main>
 const main = document.querySelector('main');
 main.appendChild(connexion);
+
+// Création d'un paragraphe pour le message d'erreur
+const errorMessageElement = document.createElement('p');
+errorMessageElement.id = 'errorMessage'; // Ajout de l'identifiant pour cibler ce paragraphe
+errorMessageElement.style.color = 'red'; // Style pour le message d'erreur (rouge)
+
+// Ajout du paragraphe de message d'erreur à la div "connexion"
+connexion.appendChild(errorMessageElement);
+
+document.querySelector('.identifiant').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
+
+    const formData = new FormData(this);
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    try {
+        const response = await fetch('http://localhost:5678/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        if (!response.ok) {
+            throw new Error('Les informations utilisateur/mot de passe ne sont pas correctes');
+        }
+
+        const data = await response.json();
+        // Connexion réussie, rediriger vers la page d'accueil
+        window.location.href = './index.html';
+    } catch (error) {
+        // Afficher un message d'erreur
+        const errorMessageElement = document.getElementById('errorMessage'); // Récupération de l'élément du message d'erreur
+        errorMessageElement.innerText = error.message; // Utilisation de l'élément récupéré pour afficher le message d'erreur
+        errorMessageElement.style.display = 'block';
+    }
+});
 
 
 
