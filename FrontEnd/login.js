@@ -90,8 +90,3 @@ document.querySelector('.identifiant').addEventListener('submit', async function
         errorMessageElement.style.display = 'block';
     }
 });
-
-
-
-
-

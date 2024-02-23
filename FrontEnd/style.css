@@ -100,6 +100,16 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+nav ul li a {
+	text-decoration: none;
+	color: black;
+}
+
+nav ul li a:hover {
+	color: #B1663C;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;

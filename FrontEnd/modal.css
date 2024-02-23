@@ -1,0 +1,99 @@
+#modal {
+    display: none; /* La modal est cachée par défaut */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Fond sombre semi-transparent */
+    overflow: auto;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fefefe;
+    border-radius: 2%;
+    margin: 15% auto;
+    padding: 85px;
+    border: 1px solid #888;
+    width: 630px;
+    height: 688px;
+    position: relative;
+
+}
+
+.modal-content .fa-xmark {
+    display: flex;
+    justify-content: right;
+    color: black;
+    font-size: 25px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-family: 'Work Sans';
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: black;
+    
+}
+
+.photo {
+    display: flex;
+    flex-direction: row;flex-wrap: wrap;
+    border-bottom: 1px solid rgba(179, 179, 179, 1);
+    
+}
+
+.photoElement {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 20%;
+}
+
+.photo img {
+    display: flex;
+    width: 90%;
+    padding: 15px;
+    
+}
+
+.fa-trash-can {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    background-color: black;
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.ajout {
+font-family: 'Syne';
+	font-weight: 300;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 40%;
+	text-align: center;
+	border-radius: 60px ;
+}
