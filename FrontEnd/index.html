@@ -17,7 +17,7 @@
 </head>
 <body class="editor">
 <header>
-	<div class="blackBar">
+	<div class="blackBar" data-admin="admin">
 		<i class="fa-solid fa-pen-to-square"></i>
 		<p>Mode édition</p>
 	</div>
@@ -34,11 +34,10 @@
 <main>
 	<div id="modal">
         <div class="modal-content">
+			
 			<i class="fa-solid fa-xmark" id="closeModal"></i>
 			<h2>Galerie photo</h2>
-			<div class="photo">
-				
-			</div>
+			<div class="photo"></div>
 			<button class="ajout">Ajouter une photo</button>
 		</div>
 		
@@ -57,9 +56,8 @@
 	<section id="portfolio">
 		<div class="modif">
 			<h2>Mes Projets</h2>
-			<i class="fa-regular fa-pen-to-square"></i>
-			<a href="#modal" id="modifier">modifier</a>
-		
+			<i class="fa-regular fa-pen-to-square" data-admin="admin"></i>
+			<a href="#modal" id="modifier" data-admin="admin">modifier</a>		
 		</div>
 		<div class="filtre"></div>	
 	</section>
