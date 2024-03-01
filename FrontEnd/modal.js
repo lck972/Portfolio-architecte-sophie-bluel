@@ -47,7 +47,7 @@ async function chargerPhotos() {
 async function supprimerPhoto(photoId) {
     try {
         // Envoyer une requête DELETE à l'API pour supprimer la photo, avec le token d'authentification inclus
-        const token = window.localStorage.getItem('sb-auth'); // Remplacez VOTRE_TOKEN_AUTH par votre jeton d'authentification
+        const token = window.localStorage.getItem('sb-auth'); 
         const response = await fetch(`http://localhost:5678/api/works/${photoId}`, {
             method: 'DELETE',
             headers: {

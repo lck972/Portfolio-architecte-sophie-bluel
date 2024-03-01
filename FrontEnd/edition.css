@@ -1,13 +1,17 @@
+.hidde {
+    display: none !important;
+}
+
 .editor {
     padding-top: 59px;
 }
 
 .blackBar {
-    display: none;
     width: 100%;
     height: 59px;
     background-color: black;
     position: absolute; 
+    top: 0px;
     margin-bottom: 20px;
      
 }

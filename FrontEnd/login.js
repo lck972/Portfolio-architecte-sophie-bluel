@@ -95,7 +95,4 @@ document.querySelector('.identifiant').addEventListener('submit', async function
 
 
 
-//afficherCategorie() 
-//const zone_admin = document.querySelectorAll('[data-admin]')
-//console.log(zone_admin)
-//Array.from(zone_admin).foreach((node) => node.classList.add('hidde'))  
+  

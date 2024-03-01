@@ -82,6 +82,26 @@
       boutonFiltre.appendChild(bouton)
     })
   }
+function modeAdmin() {
+  const token = window.localStorage.getItem ('sb-auth')
+  const elementAdmin = document.querySelectorAll('[data-admin]')
+  console.log(elementAdmin)
+  console.log(token)
+  if (token){
+    Array.from(elementAdmin).forEach((node) => node.classList.remove('hidde'))
+  }
+  else {
+    Array.from(elementAdmin).forEach((node) => node.classList.add('hidde'))
+  }
+}
 
   afficherCategorie()
+  modeAdmin()
 })()
+
+
+
+//afficherCategorie() 
+//const zone_admin = document.querySelectorAll('[data-admin]')
+//console.log(zone_admin)
+//Array.from(zone_admin).foreach((node) => node.classList.add('hidde'))
