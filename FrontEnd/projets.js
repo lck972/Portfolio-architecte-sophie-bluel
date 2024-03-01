@@ -1,6 +1,7 @@
 // Charger les projets depuis l'API et les ajouter à la galerie
 
 ;(async () => {
+  const token = window.localStorage.getItem ('sb-auth')
   try {
     const response = await fetch('http://localhost:5678/api/works')
     if (!response.ok) {
@@ -66,16 +67,14 @@
 
   async function afficherCategorie() {
     const boutonFiltre = document.querySelector('.filtre')
-    const boutonTous = document.createElement('button')
-    boutonTous.textContent = 'Tous'
-    boutonTous.addEventListener('click', () => {
-      afficherProjets('Tous')
-    })
-    boutonFiltre.appendChild(boutonTous)
     const categories = await getCategories()
+    categories.unshift({name:'tous' })
     categories.forEach((categorie) => {
       const bouton = document.createElement('button')
       bouton.textContent = categorie.name
+      if (token){
+        bouton.classList.add('hidde')
+      }
       bouton.addEventListener('click', () => {
         afficherProjets(categorie.name)
       })
@@ -83,16 +82,24 @@
     })
   }
 function modeAdmin() {
-  const token = window.localStorage.getItem ('sb-auth')
   const elementAdmin = document.querySelectorAll('[data-admin]')
-  console.log(elementAdmin)
-  console.log(token)
+  const menuLogin=document.querySelector('.login-button')
+  let page='./index.html'
+  
   if (token){
     Array.from(elementAdmin).forEach((node) => node.classList.remove('hidde'))
+    menuLogin.innerHTML='logout'
+    page = './index.html'  
   }
   else {
     Array.from(elementAdmin).forEach((node) => node.classList.add('hidde'))
+    menuLogin.innerHTML='login'
+    page='./login.html'
   }
+  menuLogin.addEventListener('click', () => {
+    localStorage.removeItem('sb-auth')
+    window.location.href =page
+  })
 }
 
   afficherCategorie()
