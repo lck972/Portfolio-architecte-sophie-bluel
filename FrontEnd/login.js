@@ -81,12 +81,10 @@ document.querySelector('.identifiant').addEventListener('submit', async function
         }
 
         const data = await response.json();
+        console.log(data)
         // Connexion réussie, rediriger vers la page d'accueil
+        window.localStorage.setItem('sb-auth', data.token)
         window.location.href = './index.html';
-       //afficherCategorie() 
-        //const zone_admin = document.querySelectorAll('[data-admin]')
-        //console.log(zone_admin)
-        //Array.from(zone_admin).foreach((node) => node.classList.add('hidde'))
     } catch (error) {
         // Afficher un message d'erreur
         const errorMessageElement = document.getElementById('errorMessage'); // Récupération de l'élément du message d'erreur

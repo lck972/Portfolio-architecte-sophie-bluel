@@ -47,7 +47,7 @@ async function chargerPhotos() {
 async function supprimerPhoto(photoId) {
     try {
         // Envoyer une requête DELETE à l'API pour supprimer la photo, avec le token d'authentification inclus
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4'; // Remplacez VOTRE_TOKEN_AUTH par votre jeton d'authentification
+        const token = window.localStorage.getItem('sb-auth'); // Remplacez VOTRE_TOKEN_AUTH par votre jeton d'authentification
         const response = await fetch(`http://localhost:5678/api/works/${photoId}`, {
             method: 'DELETE',
             headers: {
@@ -115,7 +115,7 @@ document.querySelector('.ajout').addEventListener('click', function() {
         modalContentDiv.classList.remove('modifModal-content');
         modalContentDiv.classList.add('modal-content');
         modalContentDiv.innerHTML = originalModalHTML;
-
+console.log(arrowLeftIcon)
         // Supprimer l'icône fa-arrow-left
         arrowLeftIcon.parentNode.removeChild(arrowLeftIcon);
     });
@@ -130,11 +130,12 @@ document.querySelector('.ajout').addEventListener('click', function() {
     photoDiv.insertAdjacentHTML('beforeend', formHTML);
     let ajoutButton = document.querySelector('.ajout');
     ajoutButton.innerText = "Valider";
+    console.log("click ajout")
     ajoutButton.classList.remove('ajout');
     ajoutButton.setAttribute('id', 'valider');
 
     document.querySelector('#valider').addEventListener('click', function() {
         // Action à effectuer lors du clic sur le bouton "Valider"
-    });
+   });
 });
 
