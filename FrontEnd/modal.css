@@ -92,6 +92,7 @@
 .modifModal-content {
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-color: #fefefe;
     border-radius: 2%;
     margin: 15% auto;
@@ -103,6 +104,9 @@
 }
 
 .modifModal-content .fa-arrow-left {
+    display: flex;
+    justify-content: left;
+    width: 100%;
     font-size: 25px;
     cursor: pointer;
     
@@ -190,6 +194,7 @@
 
 .modifPhoto {
     border-bottom: 1px solid rgba(179, 179, 179, 1);
+    width: 100%;
     height: 415px;
     
 }

@@ -10,24 +10,53 @@
 }
 
 .blackBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 59px;
     background-color: black;
 }
+.blackBar .fa-pen-to-square {
+    
+    color: white;
+}
 
-
+.blackBar p {
+    font-family: Work Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: white;
+    padding-left: 15px;
+}
 
 .modif {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+}
+
+.modif h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+    margin-top: 50px;
 }
 
 .modif .fa-pen-to-square {
 
     display: flex;
-    justify-content: center;
-    margin-left: 15px;
+    color: black;
+    width: 15.58px;
+    height: 15.58px;
+    margin-left: 30px;
+    padding-bottom: 25px;
 
 }
 
@@ -37,6 +66,9 @@
     font-family: 'Work Sans';
     font-weight: 400;
     line-height: 16.42px;
-    align-items: center;
+    padding-bottom: 25px;
+    margin-left: 10px;
+    color: black;
+        
 
 }

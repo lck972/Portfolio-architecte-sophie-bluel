@@ -68,7 +68,7 @@
   async function afficherCategorie() {
     const boutonFiltre = document.querySelector('.filtre')
     const categories = await getCategories()
-    categories.unshift({name:'tous' })
+    categories.unshift({name:'Tous' })
     categories.forEach((categorie) => {
       const bouton = document.createElement('button')
       bouton.textContent = categorie.name
@@ -105,10 +105,3 @@ function modeAdmin() {
   afficherCategorie()
   modeAdmin()
 })()
-
-
-
-//afficherCategorie() 
-//const zone_admin = document.querySelectorAll('[data-admin]')
-//console.log(zone_admin)
-//Array.from(zone_admin).foreach((node) => node.classList.add('hidde'))
