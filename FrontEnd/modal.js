@@ -211,7 +211,7 @@ function checkFields() {
         validerButton.removeAttribute('disabled');
         validerButton.removeAttribute('valider'); // Supprimer la classe 'valider'
         validerButton.classList.add('button'); // Ajouter la classe 'button'
-        console.log("Changement de classe du bouton effectué."); // Ajout
+        console.log("Changement de classe en button du bouton effectué."); // Ajout
     } else {
         console.log("Certains champs ne sont pas remplis...");
         // Sinon, désactiver le bouton Valider
