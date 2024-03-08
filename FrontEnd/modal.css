@@ -219,13 +219,13 @@
     height: 51px;
 }
 
-.modifPhoto form .fa-chevron-down {
-    position: absolute;
-    right: 105px;
-    bottom: 255px;
+.modifPhoto form select {
+    border: none;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+    height: 51px;
 }
 
-#valider {
+.valider {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,7 +240,9 @@
     background: rgba(167, 167, 167, 1);
     color: rgba(255, 255, 255, 1);
     border: none;
+}
 
 
-
+.cadre img {
+    height: 169px;
 }

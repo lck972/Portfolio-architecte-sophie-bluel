@@ -273,6 +273,20 @@ input[type="submit"]{
 	cursor: pointer;
 }
 
+#errorMessage {
+	align-items: center;
+	justify-content: center;
+	width: 45%;
+	height: 50px;
+	position: absolute;
+	top: 465px;
+    right: 350px;
+	color: red
+
+;
+
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;

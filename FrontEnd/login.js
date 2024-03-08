@@ -55,8 +55,6 @@ main.appendChild(connexion);
 // Création d'un paragraphe pour le message d'erreur
 const errorMessageElement = document.createElement('p');
 errorMessageElement.id = 'errorMessage'; // Ajout de l'identifiant pour cibler ce paragraphe
-errorMessageElement.style.color = 'red'; // Style pour le message d'erreur (rouge)
-
 // Ajout du paragraphe de message d'erreur à la div "connexion"
 connexion.appendChild(errorMessageElement);
 
@@ -89,7 +87,7 @@ document.querySelector('.identifiant').addEventListener('submit', async function
         // Afficher un message d'erreur
         const errorMessageElement = document.getElementById('errorMessage'); // Récupération de l'élément du message d'erreur
         errorMessageElement.innerText = error.message; // Utilisation de l'élément récupéré pour afficher le message d'erreur
-        errorMessageElement.style.display = 'block';
+        errorMessageElement.style.display = 'flex';
     }
 });
 

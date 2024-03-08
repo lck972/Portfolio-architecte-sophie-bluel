@@ -120,22 +120,121 @@ console.log(arrowLeftIcon)
         arrowLeftIcon.parentNode.removeChild(arrowLeftIcon);
     });
 
-    // Reste du code pour le bouton "Ajouter photo"
-    document.querySelector('#modal h2').innerText = "Ajout photo";
-    let photoDiv = document.querySelector('.photo');
-    photoDiv.classList.remove('photo');
-    photoDiv.classList.add('modifPhoto');
-    photoDiv.innerHTML = '<div class="cadre"><i class="fa-regular fa-image"></i><button class="ajout-photo">+ Ajouter photo</button><p>jpg, png : 4mo max.</p></div>';
-    let formHTML = '<form><label for="titre">Titre:</label><input type="text" id="titre" name="titre"><br><label for="categorie">Catégorie:</label><input type="text" id="categorie" name="categorie"><i class="fa-solid fa-chevron-down"></i><br></form>';
-    photoDiv.insertAdjacentHTML('beforeend', formHTML);
-    let ajoutButton = document.querySelector('.ajout');
-    ajoutButton.innerText = "Valider";
-    console.log("click ajout")
-    ajoutButton.classList.remove('ajout');
-    ajoutButton.setAttribute('id', 'valider');
+ // Reste du code pour le bouton "Ajouter photo"
+ document.querySelector('#modal h2').innerText = "Ajout photo";
+let photoDiv = document.querySelector('.photo');
+photoDiv.classList.remove('photo');
+photoDiv.classList.add('modifPhoto');
+photoDiv.innerHTML = '<div class="cadre"><i class="fa-regular fa-image"></i><button class="ajout-photo">+ Ajouter photo</button><p>jpg, png : 4mo max.</p></div>';
+let formHTML = '<form><label for="titre">Titre:</label><input type="text" id="titre" name="titre" required><br><label for="categorie">Catégorie:</label><select id="categorie" name="categorie" required></select><br></form>';
+photoDiv.insertAdjacentHTML('beforeend', formHTML);
+let ajoutButton = document.querySelector('.ajout');
+ajoutButton.innerText = "Valider";
+console.log("click ajout");
+ajoutButton.classList.remove('ajout');
+ajoutButton.classList.add('valider'); // Ajout de la classe 'valider'
+ajoutButton.outerHTML = "<button class='valider' disabled>Valider</button>"; // Remplacement du bouton par une balise button
+console.log("click ajout");
+console.log("click ajout");
+const cadreDiv = document.querySelector('.cadre');
 
-    document.querySelector('#valider').addEventListener('click', function() {
-        // Action à effectuer lors du clic sur le bouton "Valider"
-   });
+document.querySelector('.ajout-photo').addEventListener('click', function () {
+    // Créer un input de type file
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+
+    // Fonction pour gérer le changement de fichier
+    input.addEventListener('change', function (event) {
+        const file = event.target.files[0]; // obtenir le premier fichier sélectionné
+        if (file) {
+            // Créer un objet URL pour l'aperçu de l'image
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Créer un élément img pour afficher l'aperçu
+                const imgPreview = document.createElement('img');
+                imgPreview.src = e.target.result;
+                imgPreview.style.maxWidth = '100%';
+                imgPreview.style.maxHeight = '200px'; // limiter la taille de l'aperçu
+
+                // Supprimer les éléments existants dans la div .cadre
+                cadreDiv.innerHTML = '';
+
+                // Ajouter l'aperçu à la div .cadre
+                cadreDiv.appendChild(imgPreview);
+
+                // Appeler checkFields() après l'ajout de l'image pour vérifier l'état du bouton Valider
+                checkFields();
+            };
+            // Lire le fichier en tant que URL de données
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Récupérer le select pour la catégorie
+    const select = document.getElementById('categorie');
+
+    // Récupérer les catégories depuis l'API et les ajouter en tant qu'options au select
+    fetch('http://localhost:5678/api/categories')
+        .then(response => response.json())
+        .then(data => {
+            // Effacer les options précédentes
+            select.innerHTML = '';
+
+            // Ajouter une option par défaut
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            // defaultOption.textContent = 'Choisir une catégorie';
+            select.appendChild(defaultOption);
+
+            // Ajouter chaque catégorie en tant qu'option au select
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.name;
+                option.textContent = category.name;
+                select.appendChild(option);
+            });
+
+            // Appeler checkFields() après le chargement des catégories pour vérifier l'état du bouton Valider
+            checkFields();
+        })
+        .catch(error => console.error('Erreur lors de la récupération des catégories depuis l\'API :', error));
+
+    // Fonction pour vérifier si l'input, le select et le cadre div sont remplis
+    function checkFields() {
+        console.log("Fonction checkFields() appelée."); 
+        const inputTitre = document.getElementById('titre');
+        const select = document.getElementById('categorie'); 
+        const cadreImg = document.querySelector('.cadre img');
+        const validerButton = document.querySelector('.valider'); // Modification de la sélection pour trouver le bouton
+
+        console.log("Vérification des champs :");
+        console.log("Input titre:", inputTitre.value);
+        console.log("Select:", select.value);
+        console.log("Cadre image:", cadreImg);
+
+        if (inputTitre.value && select.value && cadreImg) {
+            console.log("Tous les champs sont remplis !");
+            // Si l'input, le select et le cadre div sont remplis, activer le bouton Valider
+            validerButton.removeAttribute('disabled');
+            validerButton.classList.remove('valider'); // Supprimer la classe 'valider'
+            validerButton.classList.add('button'); // Ajouter la classe 'button'
+            console.log("Changement de classe en button du bouton effectué."); 
+        } else {
+            console.log("Certains champs ne sont pas remplis...");
+            // Sinon, désactiver le bouton Valider
+            validerButton.setAttribute('disabled', 'disabled');
+            validerButton.classList.remove('button'); // Supprimer la classe 'button'
+            validerButton.classList.add('valider'); // Ajouter la classe 'valider'
+            console.log("Changement de classe du bouton effectué."); 
+        }
+    }
+
+    // Déclencher le clic sur l'input
+    input.click();
+});
+
+ 
+
 });
 
