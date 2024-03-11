@@ -211,7 +211,7 @@ function checkFields() {
         validerButton.removeAttribute('disabled');
         validerButton.removeAttribute('valider'); // Supprimer la classe 'valider'
         validerButton.classList.add('button'); // Ajouter la classe 'button'
-        console.log("Changement de classe en button du bouton effectué."); // Ajout
+        console.log("Changement de classe du bouton effectué."); // Ajout
     } else {
         console.log("Certains champs ne sont pas remplis...");
         // Sinon, désactiver le bouton Valider
@@ -237,7 +237,9 @@ function checkFields() {
 
 });
 
-/* // Ajouter le code pour envoyer les données à l'API ici
+/*
+
+// Ajouter le code pour envoyer les données à l'API ici
 document.querySelector('.valider').addEventListener('click', async function() {
     try {
         const titre = document.getElementById('titre').value;

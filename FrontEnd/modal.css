@@ -225,7 +225,7 @@
     height: 51px;
 }
 
-.valider {
+#valider {
     display: flex;
     justify-content: center;
     align-items: center;
