@@ -74,13 +74,13 @@ async function supprimerPhoto(photoId) {
 window.addEventListener('load', chargerPhotos);
 
 // Sélectionner l'icône de fermeture et la modal
-const closeModalIcon = document.getElementById('closeModal');
+const closeModalIcon = document.querySelector('.fa-xmark');
 
 // Ajouter un gestionnaire d'événements pour fermer la modal en cliquant sur l'icône de fermeture
 closeModalIcon.addEventListener('click', function() {
     modal.style.display = 'none';
     
-    // Réinitialiser le contenu de la modal à sa valeur initiale
+   // Réinitialiser le contenu de la modal à sa valeur initiale
     modal.innerHTML = contenuInitialModal;
 });
 
@@ -94,49 +94,36 @@ window.addEventListener('click', function(event) {
     }
 });
 
-// Ajouter un gestionnaire d'événements pour le clic sur le bouton "Ajouter photo"
-document.querySelector('.ajout').addEventListener('click', function() {
-    // Sauvegarde de l'état initial de la modal
-    const modalContentDiv = document.querySelector('.modal-content');
-    const originalModalHTML = modalContentDiv.innerHTML;
+document.addEventListener("DOMContentLoaded", function() {
+    const modalContent = document.querySelector('.modal-content');
+    const modalContent2 = document.querySelector('.modal-content2');
+    const ajoutButton = document.querySelector('.ajout');
+    const backArrow = document.querySelector('.fa-arrow-left');
+    // État initial : masquer modalContent2
+    modalContent2.style.display = 'none';
 
-    // Ajout de la classe modifModal-content
-    modalContentDiv.classList.remove('modal-content');
-    modalContentDiv.classList.add('modifModal-content');
+    // Fonction pour afficher modalContent2 et masquer modalContent
+    function showModalContent2() {
+        modalContent.style.display = 'none';
+        modalContent2.style.display = 'flex';
+    }
 
-    // Ajout de l'icône fa-arrow-left dans la modifModal-content
-    let iconHTML = '<i class="fa-solid fa-arrow-left"></i>';
-    modalContentDiv.insertAdjacentHTML('afterbegin', iconHTML);
+    // Fonction pour afficher modalContent et masquer modalContent2
+    function showmodalContent() {
+        modalContent2.style.display = 'none';
+        modalContent.style.display = 'block';
+    }
 
-    // Gestionnaire d'événements pour l'icône fa-arrow-left
-    let arrowLeftIcon = document.querySelector('.fa-arrow-left');
-    arrowLeftIcon.addEventListener('click', function() {
-        // Restaurer l'état initial de la modal
-        modalContentDiv.classList.remove('modifModal-content');
-        modalContentDiv.classList.add('modal-content');
-        modalContentDiv.innerHTML = originalModalHTML;
-console.log(arrowLeftIcon)
-        // Supprimer l'icône fa-arrow-left
-        arrowLeftIcon.parentNode.removeChild(arrowLeftIcon);
-    });
+    // Événement pour le clic sur le bouton ajout
+    ajoutButton.addEventListener('click', showModalContent2);
 
- // Reste du code pour le bouton "Ajouter photo"
-document.querySelector('#modal h2').innerText = "Ajout photo";
-let photoDiv = document.querySelector('.photo');
-photoDiv.classList.remove('photo');
-photoDiv.classList.add('modifPhoto');
-photoDiv.innerHTML = '<div class="cadre"><i class="fa-regular fa-image"></i><button class="ajout-photo">+ Ajouter photo</button><p>jpg, png : 4mo max.</p></div>';
-let formHTML = '<form><label for="titre">Titre:</label><input type="text" id="titre" name="titre" required><br><label for="categorie">Catégorie:</label><select id="categorie" name="categorie" required></select><br></form>';
-photoDiv.insertAdjacentHTML('beforeend', formHTML);
-let ajoutButton = document.querySelector('.ajout');
-ajoutButton.innerText = "Valider";
-console.log("click ajout")
-ajoutButton.classList.remove('ajout');
-ajoutButton.setAttribute('id', 'valider');
+    // Événement pour le clic sur la flèche retour
+    backArrow.addEventListener('click', showmodalContent);
+});
+
 
 const cadreDiv = document.querySelector('.cadre');
-
-document.querySelector('.ajout-photo').addEventListener('click', function() {
+document.querySelector('.ajout-photo').addEventListener('click', function(event) {
     // Créer un input de type file
     const input = document.createElement('input');
     input.type = 'file';
@@ -166,6 +153,9 @@ document.querySelector('.ajout-photo').addEventListener('click', function() {
         }
     });
 
+    // Cliquez sur le bouton d'ouverture de fichier
+    input.click();
+
     // Récupérer le select pour la catégorie
     const select = document.getElementById('categorie');
 
@@ -192,55 +182,56 @@ document.querySelector('.ajout-photo').addEventListener('click', function() {
         })
         .catch(error => console.error('Erreur lors de la récupération des catégories depuis l\'API :', error));
 
-    // Fonction pour vérifier si l'input, le select et le cadre div sont remplis
-function checkFields() {
-    console.log("Fonction checkFields() appelée."); // Ajout
-    const inputTitre = document.getElementById('titre');
-    const select = document.getElementById('categorie'); // Ajout
-    const cadreImg = document.querySelector('.cadre img');
-    const validerButton = document.getElementById('valider');
+});
 
-    console.log("Vérification des champs :");
-    console.log("Input titre:", inputTitre.value);
-    console.log("Select:", select.value);
-    console.log("Cadre image:", cadreImg);
+document.addEventListener("DOMContentLoaded", function() {
+    const cadreDiv = document.querySelector('.cadre');
+    const titreInput = document.getElementById('titre');
+    const selectCategorie = document.getElementById('categorie');
+    const validerButton = document.querySelector('.valider');
 
-    if (inputTitre.value && select.value && cadreImg) {
-        console.log("Tous les champs sont remplis !");
-        // Si l'input, le select et le cadre div sont remplis, activer le bouton Valider
-        validerButton.removeAttribute('disabled');
-        validerButton.removeAttribute('valider'); // Supprimer la classe 'valider'
-        validerButton.classList.add('button'); // Ajouter la classe 'button'
-        console.log("Changement de classe du bouton effectué."); // Ajout
-    } else {
-        console.log("Certains champs ne sont pas remplis...");
-        // Sinon, désactiver le bouton Valider
-        validerButton.setAttribute('disabled', 'disabled');
-        validerButton.classList.remove('button'); // Supprimer la classe 'button'
-        validerButton.classList.add('valider'); // Ajouter la classe 'valider'
-        console.log("Changement de classe du bouton effectué."); // Ajout
+    // Fonction pour vérifier les conditions et modifier le style du bouton de validation si nécessaire
+    function verifierEtStyliserValider() {
+        // Vérifier si la classe cadre contient un fichier image
+        const aDesFichiersImage = cadreDiv.querySelector('img') !== null;
+
+        // Vérifier si l'input titre a un élément à l'intérieur
+        const aTitre = titreInput.value.trim() !== '';
+
+        // Vérifier si le select a un élément sélectionné
+        const aCategorieSelectionnee = selectCategorie.value !== '';
+
+        // Si toutes les conditions sont remplies, modifier le style du bouton de validation pour qu'il ressemble à un simple bouton
+        if (aDesFichiersImage && aTitre && aCategorieSelectionnee) {
+            validerButton.classList.remove('valider'); // Supprimer la classe 'valider'
+            validerButton.classList.add('simple-bouton'); // Ajouter une classe pour un style de bouton simple
+            validerButton.textContent = 'Valider'; // Changer le texte du bouton
+        } else {
+            // Si les conditions ne sont pas remplies, restaurer le style du bouton de validation
+            validerButton.classList.remove('simple-bouton');
+            validerButton.classList.add('valider');
+            validerButton.textContent = 'Valider';
+        }
     }
-}
-    
 
-    // Appeler checkFields() après le chargement initial de la page pour initialiser l'état du bouton Valider
-    checkFields();
+    // Ajouter des écouteurs d'événements pour les changements pertinents
+    cadreDiv.addEventListener('change', verifierEtStyliserValider);
+    titreInput.addEventListener('input', verifierEtStyliserValider);
+    selectCategorie.addEventListener('change', verifierEtStyliserValider);
 
-    // Ajouter un événement de changement à l'input et au select pour vérifier les champs à chaque modification
-    const inputTitre = document.getElementById('titre');
-    inputTitre.addEventListener('input', checkFields);
-    select.addEventListener('change', checkFields);
+    // Appeler la fonction au chargement initial de la page pour mettre à jour le style du bouton de validation
+    verifierEtStyliserValider();
 
-    // Déclencher le clic sur l'input
-    input.click();
+    // Ajout d'un écouteur d'événements à un élément parent pour écouter les clics sur les boutons simples
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('simple-bouton')) {
+            // Ajouter le code pour envoyer les données à l'API ici
+            envoyerPhoto();
+        }
+    });
 });
 
-});
-
-/*
-
-// Ajouter le code pour envoyer les données à l'API ici
-document.querySelector('.valider').addEventListener('click', async function() {
+async function envoyerPhoto() {
     try {
         const titre = document.getElementById('titre').value;
         const categorie = document.getElementById('categorie').value;
@@ -251,19 +242,20 @@ document.querySelector('.valider').addEventListener('click', async function() {
             throw new Error("Veuillez remplir tous les champs.");
         }
 
-        // Créer un objet avec les données à envoyer à l'API
-        const formData = {
-            title: titre,
-            category: categorie,
-            image: imgSrc
-        };
+        // Créer un objet FormData
+        const formData = new FormData();
+        formData.append('title', titre);
+        formData.append('categoryId', categorie);
+        formData.append('imageUrl', imgSrc);
 
+        // Envoyer les données via une requête POST
+        const token = window.localStorage.getItem('sb-auth'); 
         const response = await fetch('http://localhost:5678/api/works', {
             method: 'POST',
+            body: formData, // Utilisation de FormData comme corps de la requête
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         if (!response.ok) {
@@ -281,5 +273,4 @@ document.querySelector('.valider').addEventListener('click', async function() {
     } catch (error) {
         console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
     }
-});
- */
+}

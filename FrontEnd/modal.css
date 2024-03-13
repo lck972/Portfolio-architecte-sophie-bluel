@@ -89,30 +89,34 @@
     cursor: pointer;
 }
 
-.modifModal-content {
-    display: flex;
+.modal-content2 {
+    position: relative;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: #fefefe;
     border-radius: 2%;
     margin: 15% auto;
-    padding: 30px 85px;
+    padding: 30px 85px 0px 85px;
     border: 1px solid #888;
     width: 630px;
     height: 670px;
-    position: relative;
+
 }
 
-.modifModal-content .fa-arrow-left {
+.modal-content2 .fa-arrow-left {
     display: flex;
     justify-content: left;
     width: 100%;
+    position: absolute;
+    top: 30px;
+    right: -25px;
     font-size: 25px;
     cursor: pointer;
     
 }
 
-.modifModal-content .fa-xmark {
+.modal-content2 .fa-xmark {
     display: flex;
     justify-content: right;
     color: black;
@@ -123,7 +127,7 @@
     cursor: pointer;
 }
 
-.modifModal-content h2 {
+.modal-content2 h2 {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
@@ -198,12 +202,15 @@
     height: 415px;
     
 }
-.modifPhoto form {
+.modal-content2 form {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid rgba(179, 179, 179, 1); 
+    padding-bottom: 25px;
 }
 
-.modifPhoto form label {
+.modal-content2 form label {
     font-family: "Work Sans";
     font-size: 14px;
     font-weight: 900;
@@ -213,19 +220,20 @@
     margin: 15px 0px;
 }
 
-.modifPhoto form input {
+.modal-content2 form input {
     border: none;
     box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
     height: 51px;
 }
 
-.modifPhoto form select {
+.modal-content2 form select {
     border: none;
     box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
     height: 51px;
+    
 }
 
-#valider {
+.valider {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -245,4 +253,24 @@
 
 .cadre img {
     height: 169px;
+}
+
+.simple-bouton {
+    font-family: Syne;
+	font-size: 16px;
+	font-weight: 700;
+	color: white;
+	line-height: 19px;
+	letter-spacing: 0em;
+	text-align: center;
+    width: 35%;
+	height: 37px;
+	border-radius: 60px;
+	background-color:#1D6154;
+	padding: 10px 25px;
+    margin-top: 50px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
