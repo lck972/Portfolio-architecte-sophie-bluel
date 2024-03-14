@@ -74,14 +74,16 @@ async function supprimerPhoto(photoId) {
 window.addEventListener('load', chargerPhotos);
 
 // Sélectionner l'icône de fermeture et la modal
-const closeModalIcon = document.querySelector('.fa-xmark');
+const closeModalIcon = document.querySelectorAll('.fa-xmark');
 
 // Ajouter un gestionnaire d'événements pour fermer la modal en cliquant sur l'icône de fermeture
-closeModalIcon.addEventListener('click', function() {
-    modal.style.display = 'none';
-    
+closeModalIcon.forEach(icon => {
+    icon.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+   /* 
    // Réinitialiser le contenu de la modal à sa valeur initiale
-    modal.innerHTML = contenuInitialModal;
+    modal.innerHTML = contenuInitialModal;*/
 });
 
 // Ajouter un gestionnaire d'événements pour fermer la modal en cliquant à l'extérieur de la modal
@@ -225,13 +227,56 @@ document.addEventListener("DOMContentLoaded", function() {
     // Ajout d'un écouteur d'événements à un élément parent pour écouter les clics sur les boutons simples
     document.addEventListener('click', function(event) {
         if (event.target.classList.contains('simple-bouton')) {
-            // Ajouter le code pour envoyer les données à l'API ici
+            async function envoyerPhoto() {
+                try {
+                     
+                    const titre = document.getElementById('titre').value;
+                    const categorie = document.getElementById('categorie').value;
+                    const imgSrc = document.querySelector('.cadre img').src;
+            
+                    // Vérifier si tous les champs sont remplis
+                    if (!titre || !categorie || !imgSrc) {
+                        throw new Error("Veuillez remplir tous les champs.");
+                    }
+            
+                    // Créer un objet FormData
+                    const formData = new FormData();
+                    formData.append('title', titre);
+                    formData.append('categoryId', categorie);
+                    formData.append('imageUrl', imgSrc);
+            
+                    // Envoyer les données via une requête POST
+                    const token = window.localStorage.getItem('sb-auth');
+                    const response = await fetch('http://localhost:5678/api/works', {
+                        method: 'POST',
+                        body: formData, // Utilisation de FormData comme corps de la requête
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+            
+                    if (!response.ok) {
+                        throw new Error("La requête POST n'a pas abouti : " + response.status);
+                    }
+            
+                    // Rafraîchir la liste des photos après l'ajout
+                    chargerPhotos();
+            
+                    // Fermer la modal
+                    modal.style.display = 'none';
+            
+                    // Réinitialiser le contenu de la modal à sa valeur initiale
+                    modal.innerHTML = contenuInitialModal;
+                } catch (error) {
+                    console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
+                }
+            }
             envoyerPhoto();
         }
     });
 });
 
-async function envoyerPhoto() {
+/*async function envoyerPhoto() {
     try {
         const titre = document.getElementById('titre').value;
         const categorie = document.getElementById('categorie').value;
@@ -273,4 +318,4 @@ async function envoyerPhoto() {
     } catch (error) {
         console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
     }
-}
+}*/

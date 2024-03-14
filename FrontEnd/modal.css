@@ -11,9 +11,6 @@
 }
 
 .modal-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     background-color: #fefefe;
     border-radius: 2%;
     margin: 15% auto;
