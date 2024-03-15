@@ -1,17 +1,22 @@
 // Sélectionner le lien "Modifier" et la modal
 const lienModifier = document.getElementById('modifier');
 const modal = document.getElementById('modal');
+const modalContent = document.querySelector('.modal-content');
+
+// Fonction pour afficher la modal et la div modalcontent
+function afficherModalEtContent() {
+    // Afficher la modal
+    modal.style.display = 'block';
+    // Afficher la div modalcontent
+    modalContent.style.display = 'block';
+}
 
 // Ajouter un gestionnaire d'événements pour le clic sur le lien "Modifier"
 lienModifier.addEventListener('click', function(event) {
     // Empêcher le comportement par défaut du lien
     event.preventDefault();
-    
-    // Afficher la modal
-    modal.style.display = 'block';
-
-    // Enregistrer le contenu initial de la modal
-    contenuInitialModal = modal.innerHTML;
+    // Afficher la modal et la div modalcontent
+    afficherModalEtContent();
 });
 
 // Charger les photos au chargement de la page
@@ -275,47 +280,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-/*async function envoyerPhoto() {
-    try {
-        const titre = document.getElementById('titre').value;
-        const categorie = document.getElementById('categorie').value;
-        const imgSrc = document.querySelector('.cadre img').src;
-
-        // Vérifier si tous les champs sont remplis
-        if (!titre || !categorie || !imgSrc) {
-            throw new Error("Veuillez remplir tous les champs.");
-        }
-
-        // Créer un objet FormData
-        const formData = new FormData();
-        formData.append('title', titre);
-        formData.append('categoryId', categorie);
-        formData.append('imageUrl', imgSrc);
-
-        // Envoyer les données via une requête POST
-        const token = window.localStorage.getItem('sb-auth'); 
-        const response = await fetch('http://localhost:5678/api/works', {
-            method: 'POST',
-            body: formData, // Utilisation de FormData comme corps de la requête
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error("La requête POST n'a pas abouti : " + response.status);
-        }
-
-        // Rafraîchir la liste des photos après l'ajout
-        chargerPhotos();
-
-        // Fermer la modal
-        modal.style.display = 'none';
-
-        // Réinitialiser le contenu de la modal à sa valeur initiale
-        modal.innerHTML = contenuInitialModal;
-    } catch (error) {
-        console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
-    }
-}*/
