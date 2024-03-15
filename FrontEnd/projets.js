@@ -1,51 +1,48 @@
 // Charger les projets depuis l'API et les ajouter à la galerie
-
-;(async () => {
-  const token = window.localStorage.getItem ('sb-auth')
+async function getWorksFromApi() {
   try {
     const response = await fetch('http://localhost:5678/api/works')
     if (!response.ok) {
       throw new Error("La requête n'a pas abouti : " + response.status)
     }
     const projets = await response.json()
+    return projets
+  } catch (error) {
+    console.error(
+      'Une erreur est survenue lors de la récupération des projets:',
+      error
+    )
+  }
+}
 
-    const portfolio = document.getElementById('portfolio')
-    const gallery = document.createElement('div')
-    gallery.classList.add('gallery')
+async function afficherProjets(nom) {
+  // Effacer le contenu précédent de la galerie
+  const projets = await getWorksFromApi()
+  const gallery = document.querySelector('.gallery')
+  gallery.innerHTML = ''
+  projets.forEach((projet) => {
+    if (nom === 'Tous' || projet.category.name === nom) {
+      const figureProjet = document.createElement('figure')
+      const image = document.createElement('img')
+      const figcaption = document.createElement('figcaption')
 
-    // Créer un ensemble pour stocker les noms de projets uniques
-    let nomsProjets = new Set()
+      image.src = projet.imageUrl // Supposons que votre objet projet contient une propriété 'image' avec l'URL de l'image
+      figcaption.textContent = projet.title // Supposons que votre objet projet contient une propriété 'titre'
 
-    // Fonction pour afficher les projets filtrés
-    function afficherProjets(nom) {
-      // Effacer le contenu précédent de la galerie
-      gallery.innerHTML = ''
+      figureProjet.appendChild(image)
+      figureProjet.appendChild(figcaption)
 
-      projets.forEach((projet) => {
-        if (nom === 'Tous' || projet.category.name === nom) {
-          const figureProjet = document.createElement('figure')
-          const image = document.createElement('img')
-          const figcaption = document.createElement('figcaption')
+      gallery.appendChild(figureProjet)
 
-          image.src = projet.imageUrl // Supposons que votre objet projet contient une propriété 'image' avec l'URL de l'image
-          figcaption.textContent = projet.title // Supposons que votre objet projet contient une propriété 'titre'
-
-          figureProjet.appendChild(image)
-          figureProjet.appendChild(figcaption)
-
-          gallery.appendChild(figureProjet)
-
-          // Ajouter le nom du projet à l'ensemble des noms de projets
-          nomsProjets.add(projet.title)
-        }
-      })
+      // Ajouter le nom du projet à l'ensemble des noms de projets
+      // nomsProjets.add(projet.title)
     }
-
+  })
+}
+;(async () => {
+  const token = window.localStorage.getItem ('sb-auth')
+  try {
     
- 
-    // Ajouter la galerie au portfolio
-    portfolio.appendChild(gallery)
-
     // Afficher tous les projets par défaut
     afficherProjets('Tous')
   } catch (error) {

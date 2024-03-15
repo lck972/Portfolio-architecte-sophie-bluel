@@ -63,13 +63,14 @@ async function supprimerPhoto(photoId) {
             throw new Error("La requête DELETE n'a pas abouti : " + response.status);
         }
 
-        // Mettre à jour l'interface utilisateur en retirant la photo supprimée
+       /* // Mettre à jour l'interface utilisateur en retirant la photo supprimée
         const photoElement = document.querySelector(`#photos div[data-photo-id="${photoId}"]`);
         if (photoElement) {
             photoElement.remove();
         } else {
             console.warn('La photo à supprimer n\'a pas été trouvée dans l\'interface utilisateur.');
-        }
+        }*/
+        afficherProjets('Tous')
     } catch (error) {
         console.error('Une erreur est survenue lors de la suppression de la photo :', error);
     }
@@ -130,6 +131,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 const cadreDiv = document.querySelector('.cadre');
+let file
+
 document.querySelector('.ajout-photo').addEventListener('click', function(event) {
     // Créer un input de type file
     const input = document.createElement('input');
@@ -138,7 +141,7 @@ document.querySelector('.ajout-photo').addEventListener('click', function(event)
 
     // Fonction pour gérer le changement de fichier
     input.addEventListener('change', function(event) {
-        const file = event.target.files[0]; // obtenir le premier fichier sélectionné
+        file = event.target.files[0]; // obtenir le premier fichier sélectionné
         if (file) {
             // Créer un objet URL pour l'aperçu de l'image
             const reader = new FileReader();
@@ -182,7 +185,7 @@ document.querySelector('.ajout-photo').addEventListener('click', function(event)
             // Ajouter chaque catégorie en tant qu'option au select
             data.forEach(category => {
                 const option = document.createElement('option');
-                option.value = category.name;
+                option.value = category.id;
                 option.textContent = category.name;
                 select.appendChild(option);
             });
@@ -247,8 +250,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Créer un objet FormData
                     const formData = new FormData();
                     formData.append('title', titre);
-                    formData.append('categoryId', categorie);
-                    formData.append('imageUrl', imgSrc);
+                    formData.append('category', categorie);
+                    formData.append('image', file);
             
                     // Envoyer les données via une requête POST
                     const token = window.localStorage.getItem('sb-auth');
@@ -271,7 +274,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     modal.style.display = 'none';
             
                     // Réinitialiser le contenu de la modal à sa valeur initiale
-                    modal.innerHTML = contenuInitialModal;
+                    //modal.innerHTML = contenuInitialModal;
+                    afficherProjets('Tous')
                 } catch (error) {
                     console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
                 }
