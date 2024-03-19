@@ -62,14 +62,7 @@ async function supprimerPhoto(photoId) {
         if (!response.ok) {
             throw new Error("La requête DELETE n'a pas abouti : " + response.status);
         }
-
-       /* // Mettre à jour l'interface utilisateur en retirant la photo supprimée
-        const photoElement = document.querySelector(`#photos div[data-photo-id="${photoId}"]`);
-        if (photoElement) {
-            photoElement.remove();
-        } else {
-            console.warn('La photo à supprimer n\'a pas été trouvée dans l\'interface utilisateur.');
-        }*/
+        chargerPhotos()
         afficherProjets('Tous')
     } catch (error) {
         console.error('Une erreur est survenue lors de la suppression de la photo :', error);
@@ -86,21 +79,28 @@ const closeModalIcon = document.querySelectorAll('.fa-xmark');
 closeModalIcon.forEach(icon => {
     icon.addEventListener('click', function() {
         modal.style.display = 'none';
+        
     });
-   /* 
-   // Réinitialiser le contenu de la modal à sa valeur initiale
-    modal.innerHTML = contenuInitialModal;*/
+   
 });
 
-// Ajouter un gestionnaire d'événements pour fermer la modal en cliquant à l'extérieur de la modal
+/// Ajouter un gestionnaire d'événements pour fermer la modal en cliquant à l'extérieur de la modal
 window.addEventListener('click', function(event) {
     if (event.target === modal) {
         modal.style.display = 'none';
-        
+        // Ajouter cette ligne pour masquer modalContent2
+        modalContent2.style.display = 'none';
+    }
+    // Ajouter cette condition pour vérifier si l'élément cliqué n'est pas contenu dans la modal
+    else if (!modal.contains(event.target)) {
+        modal.style.display = 'none';
+        modalContent2.style.display = 'none';
+
         // Réinitialiser le contenu de la modal à sa valeur initiale
         modal.innerHTML = contenuInitialModal;
     }
 });
+let modalContent2;
 
 document.addEventListener("DOMContentLoaded", function() {
     const modalContent = document.querySelector('.modal-content');
@@ -127,6 +127,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Événement pour le clic sur la flèche retour
     backArrow.addEventListener('click', showmodalContent);
+
+    // Ajouter un gestionnaire d'événements pour fermer la modal en cliquant sur l'icône de fermeture
+    closeModalIcon.forEach(icon => {
+        icon.addEventListener('click', function() {
+         modalContent2.style.display = 'none';
+    });
+});
 });
 
 

@@ -26,20 +26,16 @@ async function afficherProjets(nom) {
       const image = document.createElement('img')
       const figcaption = document.createElement('figcaption')
 
-      image.src = projet.imageUrl // Supposons que votre objet projet contient une propriété 'image' avec l'URL de l'image
-      figcaption.textContent = projet.title // Supposons que votre objet projet contient une propriété 'titre'
+      image.src = projet.imageUrl 
+      figcaption.textContent = projet.title 
 
       figureProjet.appendChild(image)
       figureProjet.appendChild(figcaption)
-
       gallery.appendChild(figureProjet)
-
-      // Ajouter le nom du projet à l'ensemble des noms de projets
-      // nomsProjets.add(projet.title)
     }
   })
 }
-;(async () => {
+  (async () => {
   const token = window.localStorage.getItem ('sb-auth')
   try {
     
