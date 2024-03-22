@@ -129,116 +129,131 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 });
 
+function handleClickAjoutPhoto() {
+    // Créer un input de type file
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+  
+    // Fonction pour gérer le changement de fichier
+    input.addEventListener('change', function (event) {
+      file = event.target.files[0] // obtenir le premier fichier sélectionné
+      if (file) {
+        // Créer un objet URL pour l'aperçu de l'image
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          // Créer un élément img pour afficher l'aperçu
+          const imgPreview = document.createElement('img')
+          imgPreview.src = e.target.result
+          imgPreview.style.maxWidth = '100%'
+          imgPreview.style.maxHeight = '200px' // limiter la taille de l'aperçu
+  
+          // Supprimer les éléments existants dans la div .cadre
+          cadreDiv.innerHTML = ''
+  
+          // Ajouter l'aperçu à la div .cadre
+          cadreDiv.appendChild(imgPreview)
+        }
+        // Lire le fichier en tant que URL de données
+        reader.readAsDataURL(file)
+      }
+    })
+  
+    // Cliquez sur le bouton d'ouverture de fichier
+    input.click()
+  
+    // Récupérer le select pour la catégorie
+    const select = document.getElementById('categorie')
+  
+    // Récupérer les catégories depuis l'API et les ajouter en tant qu'options au select
+    fetch('http://localhost:5678/api/categories')
+      .then((response) => response.json())
+      .then((data) => {
+        // Effacer les options précédentes
+        select.innerHTML = ''
+  
+        // Ajouter une option par défaut
+        const defaultOption = document.createElement('option')
+        defaultOption.value = ''
+        // defaultOption.textContent = 'Choisir une catégorie';
+        select.appendChild(defaultOption)
+  
+        // Ajouter chaque catégorie en tant qu'option au select
+        data.forEach((category) => {
+          const option = document.createElement('option')
+          option.value = category.id
+          option.textContent = category.name
+          select.appendChild(option)
+        })
+      })
+      .catch((error) =>
+        console.error(
+          "Erreur lors de la récupération des catégories depuis l'API :",
+          error
+        )
+      )
+  }
 
 const cadreDiv = document.querySelector('.cadre');
 let file
 
 document.querySelector('.ajout-photo').addEventListener('click', function(event) {
-    // Créer un input de type file
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-
-    // Fonction pour gérer le changement de fichier
-    input.addEventListener('change', function(event) {
-        file = event.target.files[0]; // obtenir le premier fichier sélectionné
-        if (file) {
-            // Créer un objet URL pour l'aperçu de l'image
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                // Créer un élément img pour afficher l'aperçu
-                const imgPreview = document.createElement('img');
-                imgPreview.src = e.target.result;
-                imgPreview.style.maxWidth = '100%';
-                imgPreview.style.maxHeight = '200px'; // limiter la taille de l'aperçu
-
-                // Supprimer les éléments existants dans la div .cadre
-                cadreDiv.innerHTML = '';
-
-                // Ajouter l'aperçu à la div .cadre
-                cadreDiv.appendChild(imgPreview);
-            };
-            // Lire le fichier en tant que URL de données
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Cliquez sur le bouton d'ouverture de fichier
-    input.click();
-
-    // Récupérer le select pour la catégorie
-    const select = document.getElementById('categorie');
-
-    // Récupérer les catégories depuis l'API et les ajouter en tant qu'options au select
-    fetch('http://localhost:5678/api/categories')
-        .then(response => response.json())
-        .then(data => {
-            // Effacer les options précédentes
-            select.innerHTML = '';
-
-            // Ajouter une option par défaut
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-           // defaultOption.textContent = 'Choisir une catégorie';
-            select.appendChild(defaultOption);
-
-            // Ajouter chaque catégorie en tant qu'option au select
-            data.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category.id;
-                option.textContent = category.name;
-                select.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Erreur lors de la récupération des catégories depuis l\'API :', error));
+    handleClickAjoutPhoto()
 
 });
 
-/*function resetModalContent2() {
-    const modalContent2 = document.getElementById('modalContent2');
-    if (modalContent2) {
-      modalContent2.innerHTML = '';
-    }
+function resetModalContent2() {
+    const node = document.querySelector('.cadre img')
+    const modalContent2 = document.querySelector('.modal-content2')
+    document.getElementById('titre').value = ''
+    document.getElementById('categorie').value = 0
+    const cadreContent = `<i class="fa-regular fa-image"></i>
+              <button class="ajout-photo">+ Ajouter photo</button>
+              <p>jpg, png : 4mo max.</p>`
+    document.querySelector('.cadre').innerHTML = cadreContent
+    document
+      .querySelector('.ajout-photo')
+      .addEventListener('click', function (event) {
+        handleClickAjoutPhoto()
+      })
+    verifierEtStyliserValider()
+    modalContent2.style.display = 'none' 
   }
-*/
+
+// Fonction pour vérifier les conditions et modifier le style du bouton de validation si nécessaire
+function verifierEtStyliserValider() {
+    const cadreDiv = document.querySelector('.cadre');
+    const titreInput = document.getElementById('titre');
+    const selectCategorie = document.getElementById('categorie');
+    const validerButton = document.querySelector('.valider');
+    // Vérifier si la classe cadre contient un fichier image
+    const aDesFichiersImage = cadreDiv.querySelector('img') !== null;
+
+    // Vérifier si l'input titre a un élément à l'intérieur
+    const aTitre = titreInput.value.trim() !== '';
+
+    // Vérifier si le select a un élément sélectionné
+    const aCategorieSelectionnee = selectCategorie.value !== '';
+
+    // Si toutes les conditions sont remplies, modifier le style du bouton de validation pour qu'il ressemble à un simple bouton
+    if (aDesFichiersImage && aTitre && aCategorieSelectionnee) {
+        validerButton.classList.remove('valider'); // Supprimer la classe 'valider'
+        validerButton.classList.add('simple-bouton'); // Ajouter une classe pour un style de bouton simple
+        validerButton.textContent = 'Valider'; // Changer le texte du bouton
+    } else {
+        // Si les conditions ne sont pas remplies, restaurer le style du bouton de validation
+        const simpleBouton = document.querySelector('.simple-bouton')
+        simpleBouton?.classList.remove('simple-bouton');
+        simpleBouton?.classList.add('valider');
+       if(simpleBouton) simpleBouton.textContent = 'Valider';
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     const cadreDiv = document.querySelector('.cadre');
     const titreInput = document.getElementById('titre');
     const selectCategorie = document.getElementById('categorie');
     const validerButton = document.querySelector('.valider');
-/*
-    // Fonction pour réinitialiser le contenu de modalContent2
-    function resetModalContent2() {
-        const modalContent2 = document.getElementById('modalContent2');
-        if (modalContent2) {
-            modalContent2.innerHTML = '';
-        }
-    }
-*/
-    // Fonction pour vérifier les conditions et modifier le style du bouton de validation si nécessaire
-    function verifierEtStyliserValider() {
-        // Vérifier si la classe cadre contient un fichier image
-        const aDesFichiersImage = cadreDiv.querySelector('img') !== null;
-
-        // Vérifier si l'input titre a un élément à l'intérieur
-        const aTitre = titreInput.value.trim() !== '';
-
-        // Vérifier si le select a un élément sélectionné
-        const aCategorieSelectionnee = selectCategorie.value !== '';
-
-        // Si toutes les conditions sont remplies, modifier le style du bouton de validation pour qu'il ressemble à un simple bouton
-        if (aDesFichiersImage && aTitre && aCategorieSelectionnee) {
-            validerButton.classList.remove('valider'); // Supprimer la classe 'valider'
-            validerButton.classList.add('simple-bouton'); // Ajouter une classe pour un style de bouton simple
-            validerButton.textContent = 'Valider'; // Changer le texte du bouton
-        } else {
-            // Si les conditions ne sont pas remplies, restaurer le style du bouton de validation
-            validerButton.classList.remove('simple-bouton');
-            validerButton.classList.add('valider');
-            validerButton.textContent = 'Valider';
-        }
-    }
 
     // Ajouter des écouteurs d'événements pour les changements pertinents
     cadreDiv.addEventListener('change', verifierEtStyliserValider);
@@ -290,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     modal.style.display = 'none';
             
                     afficherProjets('Tous')
+                    resetModalContent2()
                 } catch (error) {
                     console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
                 }
