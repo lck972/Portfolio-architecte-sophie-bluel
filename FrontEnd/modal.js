@@ -84,23 +84,16 @@ closeModalIcon.forEach(icon => {
    
 });
 
-/// Ajouter un gestionnaire d'événements pour fermer la modal en cliquant à l'extérieur de la modal
+// Ajouter un gestionnaire d'événements pour fermer la modal en cliquant à l'extérieur de la modal
 window.addEventListener('click', function(event) {
     if (event.target === modal) {
         modal.style.display = 'none';
-        // Ajouter cette ligne pour masquer modalContent2
-        modalContent2.style.display = 'none';
-    }
-    // Ajouter cette condition pour vérifier si l'élément cliqué n'est pas contenu dans la modal
-    else if (!modal.contains(event.target)) {
-        modal.style.display = 'none';
-        modalContent2.style.display = 'none';
-
+        
         // Réinitialiser le contenu de la modal à sa valeur initiale
         modal.innerHTML = contenuInitialModal;
     }
 });
-let modalContent2;
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const modalContent = document.querySelector('.modal-content');
@@ -201,12 +194,28 @@ document.querySelector('.ajout-photo').addEventListener('click', function(event)
 
 });
 
+/*function resetModalContent2() {
+    const modalContent2 = document.getElementById('modalContent2');
+    if (modalContent2) {
+      modalContent2.innerHTML = '';
+    }
+  }
+*/
+
 document.addEventListener("DOMContentLoaded", function() {
     const cadreDiv = document.querySelector('.cadre');
     const titreInput = document.getElementById('titre');
     const selectCategorie = document.getElementById('categorie');
     const validerButton = document.querySelector('.valider');
-
+/*
+    // Fonction pour réinitialiser le contenu de modalContent2
+    function resetModalContent2() {
+        const modalContent2 = document.getElementById('modalContent2');
+        if (modalContent2) {
+            modalContent2.innerHTML = '';
+        }
+    }
+*/
     // Fonction pour vérifier les conditions et modifier le style du bouton de validation si nécessaire
     function verifierEtStyliserValider() {
         // Vérifier si la classe cadre contient un fichier image
@@ -280,8 +289,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Fermer la modal
                     modal.style.display = 'none';
             
-                    // Réinitialiser le contenu de la modal à sa valeur initiale
-                    //modal.innerHTML = contenuInitialModal;
                     afficherProjets('Tous')
                 } catch (error) {
                     console.error('Une erreur est survenue lors de l\'envoi des données à l\'API :', error);
