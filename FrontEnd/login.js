@@ -54,12 +54,12 @@ main.appendChild(connexion);
 
 // Création d'un paragraphe pour le message d'erreur
 const errorMessageElement = document.createElement('p');
-errorMessageElement.id = 'errorMessage'; // Ajout de l'identifiant pour cibler ce paragraphe
+errorMessageElement.id = 'errorMessage';
 // Ajout du paragraphe de message d'erreur à la div "connexion"
 connexion.appendChild(errorMessageElement);
 
 document.querySelector('.identifiant').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
+    event.preventDefault(); 
 
     const formData = new FormData(this);
     const email = formData.get('email');
@@ -85,8 +85,8 @@ document.querySelector('.identifiant').addEventListener('submit', async function
         window.location.href = './index.html';
     } catch (error) {
         // Afficher un message d'erreur
-        const errorMessageElement = document.getElementById('errorMessage'); // Récupération de l'élément du message d'erreur
-        errorMessageElement.innerText = error.message; // Utilisation de l'élément récupéré pour afficher le message d'erreur
+        const errorMessageElement = document.getElementById('errorMessage');
+        errorMessageElement.innerText = error.message; 
         errorMessageElement.style.display = 'flex';
     }
 });
