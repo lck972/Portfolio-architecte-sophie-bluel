@@ -34,7 +34,7 @@ submitButton.textContent = 'Se connecter';
 // Création du lien "Mot de passe oublié"
 const forgotPasswordLink = document.createElement('a');
 forgotPasswordLink.textContent = 'Mot de passe oublié';
-forgotPasswordLink.href = '#'; // Mettez ici l'URL de la page de réinitialisation de mot de passe
+forgotPasswordLink.href = '#'; // Mettre ici l'URL de la page de réinitialisation de mot de passe
 
 // Ajout des éléments au formulaire
 form.appendChild(emailLabel);
