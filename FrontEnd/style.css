@@ -166,6 +166,11 @@ button {
 
 }
 
+.filtre button:hover {
+	background-color: #1D6154;
+	color: white;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -266,6 +271,7 @@ input[type="submit"]{
 
 .connexion form a {
 	color: black;
+	margin-bottom: 250px;
 }
 
 .connexion form button:hover {
@@ -279,15 +285,12 @@ input[type="submit"]{
 	justify-content: center;
 	width: 100%;
 	height: 50px;
-	color: red
-
-;
-
+	color: red;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
